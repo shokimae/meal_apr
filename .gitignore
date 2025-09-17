@@ -40,3 +40,14 @@ frontend/.env.local
 backend/firebase_admin_key.json
 frontend/node_modules/
 frontend/.next/
+# frontend build caches
+frontend/node_modules/
+frontend/.next/
+
+# 誤ってできたフォルダ対策
+next/
+frontend@*/
+
+# エディタやバックアップ
+*.bak
+.DS_Store
