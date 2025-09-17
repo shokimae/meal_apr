@@ -32,3 +32,11 @@ Thumbs.db
 .vscode/
 dist/
 coverage/
+
+# local dev
+backend/app.db
+backend/__pycache__/
+frontend/.env.local
+backend/firebase_admin_key.json
+frontend/node_modules/
+frontend/.next/

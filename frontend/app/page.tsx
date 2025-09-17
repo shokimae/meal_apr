@@ -1,18 +1,15 @@
-
-import Link from 'next/link';
-
-export default function HomePage() {
+export default function Home() {
   return (
-    <div>
-      <h1 style={{ fontSize: 24, fontWeight: 700 }}>Next.js + FastAPI + Firebase</h1>
-      <p>Dockerで立ち上がる最小構成です。</p>
-      <ul style={{ marginTop: 12 }}>
-        <li><a href="http://localhost:8000/docs" target="_blank" rel="noreferrer">FastAPI Docs</a></li>
-        <li><Link href="/items">Items ページ</Link></li>
-      </ul>
-      <p style={{ marginTop: 12 }}>
-        /api/* は Next.js の <code>rewrites</code> で <code>backend:8000</code> にプロキシされます。
-      </p>
-    </div>
-  );
+    <main className="min-h-screen bg-slate-50">
+      <section className="mx-auto max-w-3xl px-6 py-12">
+        <h1 className="text-3xl font-bold tracking-tight mb-2">Meal Logger</h1>
+        <p className="text-slate-600 mb-6">
+          Next.js + FastAPI + Tailwind が動いています。上の <code>/items</code> ページでAPI疎通も確認できます。
+        </p>
+        <a href="/items" className="inline-flex items-center rounded-xl px-4 py-2 border border-slate-300 hover:bg-white bg-slate-100">
+          Go to Items →
+        </a>
+      </section>
+    </main>
+  )
 }
