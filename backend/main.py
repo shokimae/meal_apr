@@ -222,3 +222,38 @@ def day_summary(d: str, user_id: int, db: Session = Depends(get_db)):
     }
     totals = MealTotals(weight_g=w, protein_g=p, fat_g=f, carb_g=c, kcal=k)
     return DaySummaryOut(user_id=user_id, date=d, totals=totals, by_meal_type=by)
+# ----- Simple /items endpoints for the Items page (maps to Food) -----
+from pydantic import BaseModel
+from fastapi import Depends
+from sqlalchemy.orm import Session
+
+class ItemIn(BaseModel):
+    name: str
+
+class ItemOut(BaseModel):
+    id: int
+    name: str
+    class Config:
+        from_attributes = True
+
+@app.get("/items", response_model=list[ItemOut])
+def list_items(db: Session = Depends(get_db)):
+    foods = db.query(Food).order_by(Food.id).all()
+    return [ItemOut(id=f.id, name=f.name) for f in foods]
+
+@app.post("/items", response_model=ItemOut, status_code=201)
+def create_item(payload: ItemIn, db: Session = Depends(get_db)):
+    # “名前だけ”で作れるようにデフォルト値で Food を作成
+    food = Food(
+        name=payload.name,
+        per_100g_protein=0,
+        per_100g_fat=0,
+        per_100g_carb=0,
+        per_100g_kcal=0,
+        piece_grams=100,
+    )
+    db.add(food)
+    db.commit()
+    db.refresh(food)
+    return ItemOut.model_validate(food)
+# ---------------------------------------------------------------------
